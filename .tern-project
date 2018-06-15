@@ -1,0 +1,16 @@
+{
+  "ecmaVersion": 6,
+  "libs": [
+    "browser",
+    "ecmascript"
+  ],
+  "plugins": {
+    "node": {},
+    "webpack": {
+      "configPath": "./webpack.base-config.js"
+    },
+    "doc_comment": {
+      "strong": true
+    }
+  }
+}
