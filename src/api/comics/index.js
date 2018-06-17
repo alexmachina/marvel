@@ -1,4 +1,5 @@
+import { fromJS } from 'immutable';
 import dumb from './dumb';
 
-export default dumb;
+export const fetchComics = () => fromJS(dumb.data);
 
