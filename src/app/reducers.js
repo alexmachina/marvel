@@ -1,7 +1,9 @@
 import { combineReducers } from 'redux-immutable';
-import comicsReducer from '../comics/reducers';
+import { reducer as formReducer } from 'redux-form/immutable';
+import comicsReducer from '../comics/redux/reducers';
 
 export default combineReducers({
   comics: comicsReducer,
+  form: formReducer,
 });
 

@@ -2,9 +2,10 @@ import React from 'react';
 import { createStore, applyMiddleware, compose } from 'redux';
 import reduxThunk from 'redux-thunk';
 import { Provider } from 'react-redux';
-import { BrowserRouter, Route } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
+import { withStyles } from '@material-ui/core/styles';
+import styles from './styles';
 import Comics from '../comics';
 import rootReducer from './reducers';
 
@@ -18,14 +19,12 @@ const store = createStore(
 
 const App = () => (
   <Provider store={store}>
-    <BrowserRouter>
-      <div>
-        <CssBaseline />
-        <Grid container direction="column">
-          <Route path="/" component={Comics} />
-        </Grid>
-      </div>
-    </BrowserRouter>
+    <Grid container>
+      <CssBaseline />
+      <Grid item xs={12}>
+        <Comics />
+      </Grid>
+    </Grid>
   </Provider>
 );
 

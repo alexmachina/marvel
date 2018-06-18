@@ -77,7 +77,6 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({ template: './index.html' }),
-    new CleanWebpackPlugin(['dist']),
     new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({

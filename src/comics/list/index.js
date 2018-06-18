@@ -2,7 +2,7 @@ import React from 'react';
 import { List, Map } from 'immutable';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 
-import ListItem from './component/listItem';
+import ListItem from './item';
 
 const createThumbnailUrl = (thumbnail) => {
   const path = thumbnail.get('path');
@@ -11,17 +11,26 @@ const createThumbnailUrl = (thumbnail) => {
   return `${path}/portrait_small.${extension}`;
 };
 
-const renderListItem = item => (
-  <ListItem
-    key={item.get('id')}
-    title={item.get('title')}
-    thumbnail={createThumbnailUrl(item.get('thumbnail'))}
-  />
-);
+const renderListItem = getComicCharacters => (item) => {
+  const onComicView = () => (
+    item.getIn(['characters', 'returned'], 0) > 0
+    && getComicCharacters({ comicId: item.get('id') })
+  );
 
-const ListComponent = ({ comics }) => (
+  return (
+    <ListItem
+      key={item.get('id')}
+      title={item.get('title')}
+      thumbnail={createThumbnailUrl(item.get('thumbnail'))}
+      details={item}
+      onComicView={onComicView}
+    />
+  );
+};
+
+const ListComponent = ({ comics, getComicCharacters }) => (
   <div>
-    {comics.get('results', List()).map(renderListItem)}
+    {comics.get('results', List()).map(renderListItem(getComicCharacters))}
   </div>
 );
 
@@ -30,6 +39,7 @@ ListComponent.propTypes = {
 };
 
 ListComponent.defaultProps = {
-  comics: Map(),
+  comics: Map({}),
 };
+
 export default ListComponent;
