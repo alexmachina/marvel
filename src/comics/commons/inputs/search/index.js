@@ -5,10 +5,10 @@ import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
 import styles from './styles';
 
-const SearchInput = ({ input, classes }) => {
+const SearchInput = ({ input, classes, label }) => {
   return (
     <Grid container className={classes.container}>
-      <TextField className={classes.input} label="Title" {...input} />
+      <TextField className={classes.input} label={label} {...input} />
     </Grid>
   );
 };

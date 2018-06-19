@@ -1,6 +1,13 @@
 import React from 'react';
+import InfiniteScroller from 'react-infinite-scroller';
 import { List, Map } from 'immutable';
 import ImmutablePropTypes from 'react-immutable-proptypes';
+import Grid from '@material-ui/core/Grid';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { withStyles } from '@material-ui/core/styles';
+import shortid from 'shortid';
+import Loader from '../commons/loader';
+import styles from './styles';
 
 import ListItem from './item';
 
@@ -18,20 +25,29 @@ const renderListItem = getComicCharacters => (item) => {
   );
 
   return (
-    <ListItem
-      key={item.get('id')}
-      title={item.get('title')}
-      thumbnail={createThumbnailUrl(item.get('thumbnail'))}
-      details={item}
-      onComicView={onComicView}
-    />
+    <Grid key={item.get('id')} item xs={12} md={6} lg={4}>
+      <ListItem
+        title={item.get('title')}
+        thumbnail={createThumbnailUrl(item.get('thumbnail'))}
+        details={item}
+        onComicView={onComicView}
+      />
+    </Grid>
   );
 };
 
-const ListComponent = ({ comics, getComicCharacters }) => (
-  <div>
-    {comics.get('results', List()).map(renderListItem(getComicCharacters))}
-  </div>
+const ListComponent = ({ comics, onLoadMore, hasMore, classes, getComicCharacters, }) => (
+  <InfiniteScroller
+    useWindow
+    initialLoad={false}
+    hasMore={hasMore}
+    loader={<Loader key={shortid.generate()} />}
+    loadMore={onLoadMore}
+  >
+    <Grid className={classes.root} container>
+      {comics.get('results', List()).map(renderListItem(getComicCharacters))}
+    </Grid>
+  </InfiniteScroller>
 );
 
 ListComponent.propTypes = {
@@ -42,4 +58,4 @@ ListComponent.defaultProps = {
   comics: Map({}),
 };
 
-export default ListComponent;
+export default withStyles(styles)(ListComponent);

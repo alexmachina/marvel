@@ -10,7 +10,7 @@ module.exports = {
   entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'build.js',
+    filename: 'bundle.js',
   },
   resolve: {
     alias: {
@@ -18,6 +18,7 @@ module.exports = {
     },
   },
   mode: 'development',
+  devtool: 'source-map',
   devServer: {
     historyApiFallback: true,
     hot: true,
@@ -26,6 +27,13 @@ module.exports = {
   },
   module: {
     rules: [
+      {
+        test: /\.js$/,
+        exclude: /(node_modules|bower_components)/,
+        use: {
+          loader: 'babel-loader',
+        },
+      },
       {
         test: /\.(ttf|eot|svg|woff(2)?)(\?[a-z0-9=&.]+)?$/,
         use: {
@@ -66,22 +74,19 @@ module.exports = {
           },
         ],
       },
-      {
-        test: /\.js$/,
-        exclude: /(node_modules|bower_components)/,
-        use: {
-          loader: 'babel-loader',
-        },
-      },
     ],
   },
   plugins: [
+    new CleanWebpackPlugin(['dist']),
     new HtmlWebpackPlugin({ template: './index.html' }),
     new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({
       API_KEY: JSON.stringify(apiKey),
       API_URL: JSON.stringify(apiUrl),
+    }),
+    new webpack.SourceMapDevToolPlugin({
+      filename: '[file].map',
     }),
   ],
 };

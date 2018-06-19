@@ -1,5 +1,5 @@
 export default {
   select: {
-    width: '64px',
+    width: '72px',
   },
 };

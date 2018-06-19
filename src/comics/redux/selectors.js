@@ -1,12 +1,11 @@
 import { createStructuredSelector } from 'reselect';
 import { Map } from 'immutable';
-import { getListFromMapById } from './utils';
 
-const comicsDataSelector = state => state.getIn(['comics', 'data'], Map()).update('results', getListFromMapById);
-const searchValueSelector = state => state.getIn(['comics', 'app', 'searchValue']);
+const comicsDataSelector = state => state.getIn(['app', 'comics', 'data'], Map());
+const didFirstLoadSelector = state => state.getIn(['app', 'comics', 'ui', 'didFirstLoad'], false);
 
 export default createStructuredSelector({
   comics: comicsDataSelector,
-  searchValue: searchValueSelector,
+  didFirstLoad: didFirstLoadSelector,
 });
 

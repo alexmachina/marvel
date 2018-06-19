@@ -1,3 +1,4 @@
+/* eslint-disable no-plusplus */
 import React from 'react';
 import PropTypes from 'prop-types';
 import Select from '@material-ui/core/Select';
@@ -8,18 +9,31 @@ import FormControl from '@material-ui/core/FormControl';
 import { withStyles } from '@material-ui/core/styles';
 import styles from './styles';
 
+const getYears = () => {
+  const currentYear = new Date().getFullYear();
+  const years = [];
+  let startYear = 1900;
+
+  while (startYear <= currentYear) {
+    years.push(startYear++);
+  }
+
+  return years.reverse();
+};
+
+const years = getYears();
+
 const YearInput = ({ input, classes }) => {
   return (
     <FormControl>
       <Grid container justify="flex-start">
         <InputLabel htmlFor="year">Year</InputLabel>
         <Select {...input} className={classes.select} inputProps={{ id: 'year' }}>
-          <MenuItem value={null}>
+          <MenuItem key='null-year' value={null}>
             <em>Any</em>
           </MenuItem>
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
+          {years.map(year =>
+            <MenuItem key={year} value={year}>{year}</MenuItem>)}
         </Select>
       </Grid>
     </FormControl>

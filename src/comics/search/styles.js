@@ -4,10 +4,13 @@ export default {
   },
   form: {
     display: 'flex',
+    justifyContent: 'center',
+    margin: '24px 0',
+    width: '100%',
   },
   title: {
     flexBasis: '180px',
-    width: '180px',
+    maxWidth: '180px',
   },
   year: {
     flexBasis: '64px',
@@ -15,5 +18,8 @@ export default {
   },
   button: {
     marginTop: '16px',
+    width: '108px',
+    flexBasis: '109px',
+    marginLeft: '16px',
   },
 };

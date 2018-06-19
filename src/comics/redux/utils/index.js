@@ -1,7 +1,7 @@
 import { Map, List } from 'immutable';
 // import { LOADING, LOADED, ERROR } from '../constants/statusTypes';
 
-const setMapById = results =>
+export const setMapById = results =>
   results.reduce((acc, curr) =>
     acc.set(curr.get('id'), curr), Map());
 

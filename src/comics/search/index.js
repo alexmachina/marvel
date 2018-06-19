@@ -13,29 +13,33 @@ import styles from './styles';
 const SearchForm = ({ handleSubmit, classes, getComics }) => {
   const onSubmit = values => getComics({
     titleStartsWith: values.get('title'),
+    startYear: values.get('year'),
   });
 
   return (
-    <Paper className={classes.root} elevation="1">
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Grid container justify="start" spacing={8}>
-          <Grid className={classes.title} container>
-            <Field
-              component={SearchInput}
-              name="title"
-            />
-          </Grid>
-          <Grid className={classes.year} container>
-            <Field
-              component={YearInput}
-              name="year"
-            />
-          </Grid>
-          <Grid className={classes.button} container>
-            <Button variant="contained" color="secondary" type="submit">
-              <SearchIcon className={classes.icon} />
-              Search
-            </Button>
+    <Paper className={classes.root} elevation={1}>
+      <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
+        <Grid item xs={12}>
+          <Grid container justify="center" alignItems="flex-end">
+            <Grid className={classes.title} container>
+              <Field
+                component={SearchInput}
+                name="title"
+                label="Comic Title"
+              />
+            </Grid>
+            <Grid className={classes.year} container>
+              <Field
+                component={YearInput}
+                name="year"
+              />
+            </Grid>
+            <Grid className={classes.button} container>
+              <Button variant="contained" color="secondary" type="submit">
+                <SearchIcon className={classes.icon} />
+                Search
+              </Button>
+            </Grid>
           </Grid>
         </Grid>
       </form>

@@ -1,8 +1,13 @@
+import { fromJS } from 'immutable';
 import { fetchComics, fetchComicCharacters } from '../api/comics';
 
 export const FETCH_COMICS_START = 'COMICS/FETCH_COMICS_START';
 export const FETCH_COMICS_SUCCESS = 'COMICS/FETCH_COMICS_SUCCESS';
 export const FETCH_COMICS_ERROR = 'COMICS/FETCH_COMICS_ERROR';
+
+export const FETCH_MORE_COMICS_START = 'COMICS/FETCH_MORE_COMICS_START';
+export const FETCH_MORE_COMICS_SUCCESS = 'COMICS/FETCH_MORE_COMICS_SUCCESS';
+export const FETCH_MORE_COMICS_ERROR = 'COMICS/FETCH_MORE_COMICS_ERROR';
 
 export const FETCH_COMIC_CHARACTERS_START = 'COMIC/FETCH_COMIC_CHARACTERS_START';
 export const FETCH_COMIC_CHARACTERS_SUCCESS = 'COMIC/FETCH_COMIC_CHARACTERS_SUCCESS';
@@ -12,10 +17,20 @@ export const getComics = params => async (dispatch) => {
   dispatch({ type: FETCH_COMICS_START });
   try {
     const data = await fetchComics(params);
-    dispatch({ type: FETCH_COMICS_SUCCESS, data });
+    dispatch({ type: FETCH_COMICS_SUCCESS, data: data.set('params', fromJS(params)) });
   } catch (error) {
     console.error(error);
     dispatch({ type: FETCH_COMICS_ERROR, error });
+  }
+};
+
+export const getMoreComics = params => async (dispatch) => {
+  dispatch({ type: FETCH_MORE_COMICS_START });
+  try {
+    const data = await fetchComics(params);
+    dispatch({ type: FETCH_MORE_COMICS_SUCCESS, data: data.set('params', fromJS(params)) });
+  } catch (error) {
+    dispatch({ type: FETCH_MORE_COMICS_ERROR, error });
   }
 };
 
